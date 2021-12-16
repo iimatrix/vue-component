@@ -42,9 +42,11 @@
             <button :disabled='disabled' @click='submit'>click</button>
         </div>`,
     setup(props, context) {
+        // input组件的 v-model
         const [input_0, input_1, input_2, input_3,input_4, input_5] = [Vue.ref('') , Vue.ref(''), Vue.ref(''), Vue.ref(''), Vue.ref(''), Vue.ref('')]
-        
+        // 最终结果
         const result = Vue.ref('');
+        // 提交按钮是否可点击
         const disabled = Vue.ref(true)
 
         let inputs = {}
@@ -59,11 +61,13 @@
             }
         })
 
+        // 获取最终验证码输入结果
         function getResult() {
             result.value =  `${input_0.value}${input_1.value}${input_2.value}${input_3.value}${input_4.value}${input_5.value}`;
             disabled.value = (result.value.length !== 6);
         }
         
+         // 输入验证码时处理函数
         function inputCaptcha(index) {
             const captcha =  inputs[index]
             if (!captcha.input.value) {
@@ -88,6 +92,7 @@
         function submit() {
             console.log(result.value);
         }
+
         return {
             input_0, input_1, input_2, input_3,input_4, input_5,
             result, disabled, 
@@ -101,8 +106,6 @@
   // 可以通过下面的方式手动注册
   app.use(vant.Lazyload);
 
-  // 调用函数组件，弹出一个 Toast
-
   app.mount('#app');
 </script>
 <style>
@@ -113,6 +116,7 @@
     #captcha .sep {
         margin: 5px;
     }
+    /* 隐藏 input:number 组件的按钮 */
     #captcha input::-webkit-outer-spin-button,
     #captcha input::-webkit-inner-spin-button {
         appearance: none;

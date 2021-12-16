@@ -18,12 +18,15 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
 import { onMounted} from 'vue';
+    // input组件的 v-model
     const [input_0, input_1, input_2, input_3,input_4, input_5] = [ref('') , ref(''), ref(''), ref(''), ref(''), ref('')]
 
     let inputs = {
         
     }
+    // 最终结果
     const result = ref('');
+    // 提交按钮是否可点击
     const disabled = ref(true)
 
     class Captcha {
@@ -39,6 +42,7 @@ import { onMounted} from 'vue';
     
 
     onMounted(() => {
+        // 获取input dom
         inputs = {
             '0':  new Captcha(input_0, null, `#captcha input[data-index='1']`),
             '1': new Captcha(input_1, `#captcha input[data-index='0']`, `#captcha input[data-index='2']`),
@@ -48,11 +52,13 @@ import { onMounted} from 'vue';
             '5': new Captcha(input_5, `#captcha input[data-index='4']`, null),
         }
     })
+    // 获取最终验证码输入结果
     function getResult() {
         result.value =  `${input_0.value}${input_1.value}${input_2.value}${input_3.value}${input_4.value}${input_5.value}`;
         disabled.value = (result.value.length !== 6);
     }
     
+    // 输入验证码时处理函数
     function inputCaptcha(index) {
         const captcha =  inputs[index]
         if (!captcha.input.value) {
@@ -63,6 +69,7 @@ import { onMounted} from 'vue';
         getResult()
     }
 
+    // 删除验证码时处理函数
     function back(event , index) {
         if (event.key === 'Backspace') {
             const captcha = inputs[index];
@@ -81,6 +88,7 @@ import { onMounted} from 'vue';
         .sep {
             margin: 5px;
         }
+        /* 隐藏 input:number 组件的按钮 */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
             appearance: none;
